@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import {defineComponent, onMounted, ref} from 'vue'
-import request from '@/request/request.js'
+import request from '@/request/request'
 
 export default defineComponent({
     name: 'archive',
