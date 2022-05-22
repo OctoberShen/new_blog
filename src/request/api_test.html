@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="module" lang="ts" >
+    console.log("in")
+    import request from './request.ts'
+    import { onMounted } from 'vue'
+
+    interface Req {
+        apiKey: string
+        area?: string
+        areaID?: string
+    }
+    interface Res {
+        area: string
+        areaCode: string
+        areaid: string
+        dayList: any[]
+    }
+    const get15DaysWeatherByArea = (data: Req) => {
+        return request<Req, Res>({
+            url: '/common/weather/get15DaysWeatherByArea',
+            method: 'POST',
+            data,
+            interceptors: {
+                requestInterceptors(res) {
+                    console.log('接口请求拦截')
+
+                    return res
+                },
+                responseInterceptors(result) {
+                    console.log('接口响应拦截')
+                    return result
+                },
+            },
+        })
+    }
+    onMounted(async () => {
+        const res = await get15DaysWeatherByArea({
+            apiKey: "vueBZyef42a12600d6d65bd84a619433b54a7778bc0eaa7",
+            area: '杭州',
+            areaID: '101210109'
+        })
+        console.log(res)
+    })
+</script>
+</body>
+</html>
